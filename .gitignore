@@ -11,6 +11,8 @@ ui/
 !.vscode/
 !.vscode/*
 
+!.run
+
 .ninja_deps
 .ninja_log
 build.ninja
