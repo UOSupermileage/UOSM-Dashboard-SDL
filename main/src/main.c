@@ -78,7 +78,7 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-  DataAggregatorWrapper* wrapper = DataAggregator_Create();
+  DataAggregatorWrapper* wrapper = DataAggregator_Create(10);
   Application_Create(wrapper);
 
   uint32_t time = 0;
