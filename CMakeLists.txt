@@ -38,7 +38,8 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/Drivers
 )
 
-file(GLOB_RECURSE SOURCES "main/*.*" "UOSM-Dashboard/Core/UI/*.*" "UOSM-Dashboard/Drivers/Fonts/*.*" "lv_drivers/*.*" "UOSM-Dashboard/Drivers/lvgl/*.*")
+file(GLOB_RECURSE SOURCES "main/*.*" "lv_drivers/*.*")
+file(GLOB_RECURSE UI_SOURCES "UOSM-Dashboard/Core/UI/*.*" "UOSM-Dashboard/Drivers/Fonts/*.*" "UOSM-Dashboard/Drivers/lvgl/*.*")
 
 # Files to test
 file(GLOB_RECURSE TEST_SOURCES "test/*.*")
@@ -57,8 +58,8 @@ find_package(SDL2 REQUIRED)
 
 enable_testing()
 
-add_executable(UOSM-Dashboard-SDL ${SOURCES})
-add_executable(UOSM-Dashboard-Test ${TEST_SOURCES})
+add_executable(UOSM-Dashboard-SDL ${SOURCES} ${UI_SOURCES})
+add_executable(UOSM-Dashboard-Test ${TEST_SOURCES} ${UI_SOURCES})
 
 set_target_properties(UOSM-Dashboard-SDL PROPERTIES LINKER_LANGUAGE CXX)
 

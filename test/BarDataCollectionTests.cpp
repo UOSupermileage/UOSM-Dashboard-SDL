@@ -7,13 +7,13 @@
 #include "BarDataCollection.h"
 
 // Test the constructor with valid and invalid sizes
-TEST(BarDataCollectionTest, Constructor) {
+TEST(BarDataCollectionTests, Constructor) {
     EXPECT_NO_THROW(BarDataCollection<int> collection(5));
     EXPECT_THROW(BarDataCollection<int> collection(0), std::invalid_argument);
 }
 
 // Test adding values to the collection
-TEST(BarDataCollectionTest, AddValue) {
+TEST(BarDataCollectionTests, AddValue) {
     BarDataCollection<int> collection(3);
 
     collection.add(10);
@@ -24,7 +24,7 @@ TEST(BarDataCollectionTest, AddValue) {
 }
 
 // Test adding more values than the collection size
-TEST(BarDataCollectionTest, AddExceedingSize) {
+TEST(BarDataCollectionTests, AddExceedingSize) {
     BarDataCollection<int> collection(2);
 
     collection.add(10);
@@ -37,7 +37,7 @@ TEST(BarDataCollectionTest, AddExceedingSize) {
 }
 
 // Test updating a value
-TEST(BarDataCollectionTest, UpdateValue) {
+TEST(BarDataCollectionTests, UpdateValue) {
     BarDataCollection<int> collection(2);
 
     collection.add(10);
@@ -51,7 +51,7 @@ TEST(BarDataCollectionTest, UpdateValue) {
 }
 
 // Test updating without any values added
-TEST(BarDataCollectionTest, UpdateWithoutAdd) {
+TEST(BarDataCollectionTests, UpdateWithoutAdd) {
     BarDataCollection<int> collection(2);
 
     collection.update(30);
@@ -61,7 +61,7 @@ TEST(BarDataCollectionTest, UpdateWithoutAdd) {
 }
 
 // Test getting the number of elements
-TEST(BarDataCollectionTest, GetNumberOfElements) {
+TEST(BarDataCollectionTests, GetNumberOfElements) {
     BarDataCollection<int> collection(3);
 
     collection.add(10);
@@ -71,7 +71,7 @@ TEST(BarDataCollectionTest, GetNumberOfElements) {
 }
 
 // Test getting the size of the collection
-TEST(BarDataCollectionTest, GetSize) {
+TEST(BarDataCollectionTests, GetSize) {
     BarDataCollection<int> collection(5);
 
     EXPECT_EQ(collection.getSize(), 5);
