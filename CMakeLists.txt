@@ -10,6 +10,20 @@ project(UOSM-Dashboard-SDL C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
+# GoogleTest requires at least C++14
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Get GoogleTest dependency
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+# Compile for debugging
 message(STATUS "Minimal optimization, debug info included")
 add_compile_options(-Og -g)
 
@@ -26,6 +40,9 @@ include_directories(
 
 file(GLOB_RECURSE SOURCES "main/*.*" "UOSM-Dashboard/Core/UI/*.*" "UOSM-Dashboard/Drivers/Fonts/*.*" "lv_drivers/*.*" "UOSM-Dashboard/Drivers/lvgl/*.*")
 
+# Files to test
+file(GLOB_RECURSE TEST_SOURCES "test/*.*")
+
 add_subdirectory(lv_drivers)
 add_subdirectory(UOSM-Dashboard/Drivers/lvgl)
 
@@ -38,9 +55,17 @@ add_link_options(-Wl)
 
 find_package(SDL2 REQUIRED)
 
+enable_testing()
+
 add_executable(UOSM-Dashboard-SDL ${SOURCES})
+add_executable(UOSM-Dashboard-Test ${TEST_SOURCES})
 
 set_target_properties(UOSM-Dashboard-SDL PROPERTIES LINKER_LANGUAGE CXX)
 
 include_directories(UOSM-Dashboard-SDL ${SDL2_INCLUDE_DIRS})
-target_link_libraries(UOSM-Dashboard-SDL ${SDL2_LIBRARIES})
+target_link_libraries(UOSM-Dashboard-SDL ${SDL2_LIBRARIES} GTest::gtest_main)
+
+target_link_libraries(UOSM-Dashboard-Test GTest::gtest_main)
+
+include(GoogleTest)
+gtest_discover_tests(UOSM-Dashboard-Test)

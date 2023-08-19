@@ -69,6 +69,11 @@ static int tick_thread(void *data);
 
 int main(int argc, char **argv)
 {
+    if (argc > 1 && strcmp(argv[1], "TEST") == 0) {
+        // Don't start the main loop if running unit tests
+        return 0;
+    }
+
   (void)argc; /*Unused*/
   (void)argv; /*Unused*/
 
