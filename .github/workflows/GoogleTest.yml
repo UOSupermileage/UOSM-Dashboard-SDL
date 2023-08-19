@@ -19,7 +19,7 @@ jobs:
         submodules: recursive
 
     - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_PREFIX_PATH=/usr/lib/aarch64-linux-gnu/cmake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
 
     - name: Build
       # Build your program with the given configuration
