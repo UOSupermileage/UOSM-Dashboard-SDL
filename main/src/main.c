@@ -83,7 +83,7 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-  DataAggregatorWrapper* wrapper = DataAggregator_Create(10);
+  DataAggregatorWrapper* wrapper = DataAggregator_Create(10, 10, 10, 10);
   Application_Create(wrapper);
 
   uint32_t time = 0;
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 
     time += 5;
 
-    SetLapTime(wrapper, time);
+    SetLapTime(wrapper, time % (1000 * 1000));
   }
 
   return 0;

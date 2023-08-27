@@ -20,12 +20,12 @@ TEST(ObservedObjectTests, GetMutable) {
     ObservedObject<int> observedObject(5);
 
     // Get a mutable reference to the value
-    int* mutableValue = observedObject.getMutable();
+    int& mutableValue = observedObject.getMutable();
 
-    EXPECT_EQ(*mutableValue, 5);
+    EXPECT_EQ(mutableValue, 5);
 
     // Modify the mutable value and publish changes
-    *mutableValue = 10;
+    mutableValue = 10;
 
     // The value of the observed object should also change
     EXPECT_EQ(observedObject.get(), 10);

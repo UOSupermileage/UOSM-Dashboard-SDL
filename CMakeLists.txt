@@ -34,6 +34,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/Core/UI
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Data
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Utils
+    ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Components
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/UOSM-Core/Inc
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/Drivers
 )
