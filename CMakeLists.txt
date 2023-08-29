@@ -36,10 +36,15 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Utils
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Components
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/UOSM-Core/Inc
+    ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/UOSM-Core/Drivers
+    ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/UOSM-Core/Modules
+    ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/UOSM-Core/Utils
     ${CMAKE_SOURCE_DIR}/UOSM-Dashboard/Drivers
 )
 
-file(GLOB_RECURSE SOURCES "main/*.*" "lv_drivers/*.*")
+add_definitions(-DUOSM_OBSERVABLES)
+
+file(GLOB_RECURSE SOURCES "main/*.*" "lv_drivers/*.*" "UOSM-Dashboard/UOSM-Core/Utils/*.*" "UOSM-Dashboard/Core/Src/UOSMCoreConfig.c" "UOSM-Dashboard/UOSM-Core/Drivers/SerialDebugDriver.c")
 file(GLOB_RECURSE UI_SOURCES "UOSM-Dashboard/Core/UI/*.*" "UOSM-Dashboard/Drivers/Fonts/*.*" "UOSM-Dashboard/Drivers/lvgl/*.*")
 
 # Files to test
