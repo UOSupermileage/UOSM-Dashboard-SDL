@@ -1,6 +1,0 @@
-[submodule "lv_drivers"]
-	path = lv_drivers
-	url = https://github.com/lvgl/lv_drivers.git
-[submodule "UOSM-Dashboard"]
-	path = UOSM-Dashboard
-	url = git@github.com:UOSupermileage/UOSM-Dashboard.git
