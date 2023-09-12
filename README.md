@@ -1,5 +1,7 @@
 # SDL Simulator for UOSM Dashboard
 
+See the UOSM-Dashboard's repo for details about the dashboard application.
+
 ## Usage
 
 ### Get the project
@@ -15,6 +17,8 @@ You will need `WSL2` to run this project on Windows.
 https://learn.microsoft.com/en-us/windows/wsl/basic-commands
 
 Once WSL is installed, you can follow allong with the linux instructions.
+
+You will need to add WSL in your CLion toolchains.
 
 ### Install SDL
 You can download SDL from https://www.libsdl.org/
