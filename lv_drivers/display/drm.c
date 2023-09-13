@@ -510,8 +510,8 @@ static int drm_open(const char *path)
 	/* check capability */
 	ret = drmGetCap(fd, DRM_CAP_DUMB_BUFFER, &has_dumb);
 	if (ret < 0 || has_dumb == 0) {
-		err("drmGetCap DRM_CAP_DUMB_BUFFER failed or \"%s\" doesn't have dumb "
-		    "buffer", path);
+		err("drmGetCap DRM_CAP_DUMB_BUFFER failed or doesn't have dumb "
+		    "buffer");
 		goto err;
 	}
 
@@ -524,13 +524,8 @@ err:
 static int drm_setup(unsigned int fourcc)
 {
 	int ret;
-	const char *device_path = NULL;
 
-	device_path = getenv("DRM_CARD");
-	if (!device_path)
-		device_path = DRM_CARD;
-
-	drm_dev.fd = drm_open(device_path);
+	drm_dev.fd = drm_open(DRM_CARD);
 	if (drm_dev.fd < 0)
 		return -1;
 
@@ -751,7 +746,7 @@ void drm_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color
 }
 
 #if LV_COLOR_DEPTH == 32
-#define DRM_FOURCC DRM_FORMAT_XRGB8888
+#define DRM_FOURCC DRM_FORMAT_ARGB8888
 #elif LV_COLOR_DEPTH == 16
 #define DRM_FOURCC DRM_FORMAT_RGB565
 #else

@@ -33,10 +33,6 @@
 #define FBDEV_PATH  "/dev/fb0"
 #endif
 
-#ifndef DIV_ROUND_UP
-#define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
-#endif
-
 /**********************
  *      TYPEDEFS
  **********************/
@@ -80,10 +76,6 @@ static int fbfd = 0;
  *      MACROS
  **********************/
 
-#if USE_BSD_FBDEV
-#define FBIOBLANK FBIO_BLANK
-#endif /* USE_BSD_FBDEV */
-
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
@@ -96,15 +88,7 @@ void fbdev_init(void)
         perror("Error: cannot open framebuffer device");
         return;
     }
-    LV_LOG_INFO("The framebuffer device was opened successfully");
-
-#if FBDEV_DISPLAY_POWER_ON
-    // Make sure that the display is on.
-    if (ioctl(fbfd, FBIOBLANK, FB_BLANK_UNBLANK) != 0) {
-        perror("ioctl(FBIOBLANK)");
-        return;
-    }
-#endif /* FBDEV_DISPLAY_POWER_ON */
+    printf("The framebuffer device was opened successfully.\n");
 
 #if USE_BSD_FBDEV
     struct fbtype fb;
@@ -144,7 +128,7 @@ void fbdev_init(void)
     }
 #endif /* USE_BSD_FBDEV */
 
-    LV_LOG_INFO("%dx%d, %dbpp", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel);
+    printf("%dx%d, %dbpp\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel);
 
     // Figure out the size of the screen in bytes
     screensize =  finfo.smem_len; //finfo.line_length * vinfo.yres;    
@@ -155,11 +139,9 @@ void fbdev_init(void)
         perror("Error: failed to map framebuffer device to memory");
         return;
     }
+    memset(fbp, 0, screensize);
 
-    // Don't initialise the memory to retain what's currently displayed / avoid clearing the screen.
-    // This is important for applications that only draw to a subsection of the full framebuffer.
-
-    LV_LOG_INFO("The framebuffer device was mapped to memory successfully");
+    printf("The framebuffer device was mapped to memory successfully.\n");
 
 }
 
@@ -172,7 +154,7 @@ void fbdev_exit(void)
  * Flush a buffer to the marked area
  * @param drv pointer to driver where this function belongs
  * @param area an area where to copy `color_p`
- * @param color_p an array of pixels to copy to the `area` part of the screen
+ * @param color_p an array of pixel to copy to the `area` part of the screen
  */
 void fbdev_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color_p)
 {
@@ -254,20 +236,12 @@ void fbdev_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color
     lv_disp_flush_ready(drv);
 }
 
-void fbdev_get_sizes(uint32_t *width, uint32_t *height, uint32_t *dpi) {
+void fbdev_get_sizes(uint32_t *width, uint32_t *height) {
     if (width)
         *width = vinfo.xres;
 
     if (height)
         *height = vinfo.yres;
-
-    if (dpi && vinfo.height)
-        *dpi = DIV_ROUND_UP(vinfo.xres * 254, vinfo.width * 10);
-}
-
-void fbdev_set_offset(uint32_t xoffset, uint32_t yoffset) {
-    vinfo.xoffset = xoffset;
-    vinfo.yoffset = yoffset;
 }
 
 /**********************
