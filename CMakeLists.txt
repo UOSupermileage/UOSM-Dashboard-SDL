@@ -53,7 +53,7 @@ file(GLOB_RECURSE TEST_SOURCES "test/*.*")
 add_subdirectory(lv_drivers)
 add_subdirectory(UOSM-Dashboard/Drivers/lvgl)
 
-add_link_options(-Wl)
+add_link_options(-W)
 
 # find_file(SDL2_INCLUDE_DIRS NAME SDL.h HINTS SDL2)
 # find_library(SDL2_LIBRARY NAME SDL2)
