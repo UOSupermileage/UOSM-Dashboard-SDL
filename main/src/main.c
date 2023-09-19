@@ -87,7 +87,7 @@ int main(int argc, char **argv)
   Application_Create(wrapper);
 
   uint32_t time = 0;
-
+  
   while(1) {
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 
     time += 5;
 
-    SetLapTime(wrapper, time % (1000 * 1000));
+    SetLapTime(wrapper, time % (1000));
   }
 
   return 0;
