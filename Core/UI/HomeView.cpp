@@ -5,6 +5,13 @@
 #include "HomeView.hpp"
 #include "StylesManager.hpp"
 
+lv_obj_t * ai;
+lv_obj_t * notAi;
+
+static void setArcValue(lv_obj_t * arc, int value) {
+    lv_arc_set_value(arc, value);
+}
+
 HomeView::HomeView(lv_obj_t* parent, HomeViewModel& viewModel) : View(parent, viewModel), viewModel(viewModel) {
     Styles* styles = StylesManager::GetStyles();
 
@@ -103,4 +110,26 @@ HomeView::HomeView(lv_obj_t* parent, HomeViewModel& viewModel) : View(parent, vi
         lv_chart_set_point_count(lapTimeBarGraph, queue.getNumberOfElements());
         lv_chart_refresh(lapTimeBarGraph);
     });
+
+    viewModel.GetAggregator().throttlePositions.addListenerForLatest([this](const percentage_t& throttle) {
+        lv_anim_t a;
+        lv_anim_init(&a);
+        lv_anim_set_var(&a, throttleArc);
+        lv_anim_set_exec_cb(&a, reinterpret_cast<lv_anim_exec_xcb_t>(setArcValue));
+        lv_anim_set_time(&a, 100);
+        lv_anim_set_values(&a, lv_arc_get_value(throttleArc), throttle);
+        lv_anim_start(&a);
+    });
+
+    ai = aiThrottleArc;
+    notAi = throttleArc;
+
+    lv_timer_t * timer = lv_timer_create([](lv_timer_t * timer) {lv_anim_t a;
+        lv_anim_init(&a);
+        lv_anim_set_var(&a, ai);
+        lv_anim_set_exec_cb(&a, reinterpret_cast<lv_anim_exec_xcb_t>(setArcValue));
+        lv_anim_set_time(&a, 100);
+        lv_anim_set_values(&a, lv_arc_get_value(ai), 10+rand()%80);
+        lv_anim_start(&a);
+    }, 500, nullptr);
 }
