@@ -4,9 +4,9 @@
 [submodule "lvgl"]
 	path = lvgl
 	url = https://github.com/lvgl/lvgl.git
-[submodule "FreeRTOS"]
-	path = FreeRTOS
-	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
 [submodule "UOSM-Dashboard"]
 	path = UOSM-Dashboard
 	url = git@github.com:UOSupermileage/UOSM-Dashboard.git
+[submodule "FreeRTOS"]
+	path = FreeRTOS
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
