@@ -1,0 +1,23 @@
+# Ignore build folder
+build/
+bin/
+
+# Ignore UI folder, this should be commited in its own repository
+ui/
+
+# Ignore all dot folders, with below exceptions
+.*/
+
+# VSCode
+.vscode
+.idea
+.ninja_deps
+.ninja_log
+build.ninja
+cmake_install.cmake
+CMakeCache.txt
+CMakeFiles
+UOSM-Dashboard-SDL
+.cmake
+debug
+cmake-*/
