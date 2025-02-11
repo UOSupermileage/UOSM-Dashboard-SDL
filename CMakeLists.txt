@@ -86,7 +86,8 @@ target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS
 #)
 file(GLOB UI_SOURCES
         ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/*.cpp
-        ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Utils/*.cpp
+        ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Utils/Cards.cpp
+        ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Utils/View.cpp
         ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Data/*.cpp
 )
 
@@ -192,6 +193,8 @@ endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wimplicit-function-declaration")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g -O1")
+
 # Apply additional compile options if the build type is Debug
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(STATUS "Debug mode enabled")
