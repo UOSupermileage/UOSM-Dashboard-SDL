@@ -84,7 +84,12 @@ target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS
 #        ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Utils/View.cpp
 #        ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Utils/montserrat_72.c
 #)
-file(GLOB UI_SOURCES ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/*.cpp ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Utils/*.cpp ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Data/*.cpp)
+file(GLOB UI_SOURCES
+        ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/*.cpp
+        ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Utils/*.cpp
+        ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/UI/Data/*.cpp
+)
+
 file(GLOB DASHBOARD_SOURCES ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/Modules/*.c)# ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/Core/Tasks/*.c)
 file(GLOB UOSM_CORE_SOURCES
         ${PROJECT_SOURCE_DIR}/UOSM-Dashboard/UOSM-Core/Drivers/CANDriver.c
