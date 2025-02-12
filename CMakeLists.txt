@@ -46,11 +46,15 @@ option(LV_USE_FFMPEG "Use libffmpeg to display video using lv_ffmpeg" OFF)
 option(LV_USE_FREETYPE "Use freetype library" OFF)
 
 # Set C and C++ standards
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+add_compile_options(-Og -g)
+
+# define SIM variables
+add_definitions(-DSIM)
 
 #set(CMAKE_C_COMPILER "/usr/bin/gcc")
 #set(CMAKE_CXX_COMPILER "/usr/bin/g++")
