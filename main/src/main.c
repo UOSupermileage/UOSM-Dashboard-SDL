@@ -83,10 +83,24 @@ int main(int argc, char **argv)
   // lv_demo_widgets();
   DataAggregatorWrapper* wrapper = DataAggregator_Create();
   Application_Create(wrapper);
-
+  int i = 0;
+  int j = 31;
   while(1) {
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
+    i++;
+   SetSpeed(wrapper, j*1000);
+   SetRPMSpeed(wrapper,0);
+    if (i == 100) {
+      i = 0;
+      j--;
+     if (j == -1) {
+      j = 31;
+     }
+    }
+
+
+
     lv_timer_handler();
     usleep(5 * 1000);
   }
