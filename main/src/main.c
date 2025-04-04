@@ -90,7 +90,6 @@ int main(int argc, char **argv)
      * It could be done in a timer interrupt or an OS task too.*/
     i++;
    SetSpeed(wrapper, j*1000);
-   SetRPMSpeed(wrapper,0);
     if (i == 100) {
       i = 0;
       j--;
