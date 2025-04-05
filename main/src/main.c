@@ -89,8 +89,12 @@ int main(int argc, char **argv)
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
     i++;
-   SetSpeed(wrapper, j*1000);
+
+   if (i == 50) {
+    SetSpeed(wrapper, 60000);
+   }
     if (i == 100) {
+     SetSpeed(wrapper, j*1000);
       i = 0;
       j--;
      if (j == -1) {
