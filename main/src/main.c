@@ -84,7 +84,8 @@ int main(int argc, char **argv)
   DataAggregatorWrapper* wrapper = DataAggregator_Create();
   Application_Create(wrapper);
   int i = 0;
-  int j = 31;
+  int j = 0;
+ bool slow = false;
   while(1) {
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
@@ -96,9 +97,13 @@ int main(int argc, char **argv)
     if (i == 100) {
      SetSpeed(wrapper, j*1000);
       i = 0;
-      j--;
-     if (j == -1) {
-      j = 31;
+     if (slow){j--;}
+     else{j++;}
+     if (j == 15) {
+      slow = true;
+     }
+     if (j == 0) {
+      slow = false;
      }
     }
 
