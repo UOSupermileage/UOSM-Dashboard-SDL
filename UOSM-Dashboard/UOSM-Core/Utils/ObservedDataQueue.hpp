@@ -1,7 +1,3 @@
-//
-// Created by Jeremy Cote on 2023-08-21.
-//
-
 #ifdef UOSM_OBSERVABLES
 
 #ifndef UOSM_CORE_OBSERVEDDATAQUEUE_HPP
@@ -10,65 +6,55 @@
 #include "DataQueue.hpp"
 #include "ObservedObject.hpp"
 
-/**
- *
- */
 template<typename T>
-class ObservedDataQueue: public ObservedObject<DataQueue<T>> {
+class ObservedDataQueue : public ObservedObject<DataQueue<T>> {
 private:
-    DataQueue<T> queue;
-public:
-    explicit ObservedDataQueue(uint8_t size): queue(size), ObservedObject<DataQueue<T>>(&queue, false) {}
+    DataQueue<T> queue; // Composition
 
-    /**
-     * Copy a value into the bar data collection. IMPORTANT: This creates a copy of the passed value.
-     * @param value to copy into the collection
-     */
+public:
+    explicit ObservedDataQueue(uint8_t size) : queue(size), ObservedObject<DataQueue<T>>(&queue, false) {}
+
     void add(T value) {
+        // Gestion de la mémoire pour les pointeurs
+        if constexpr (std::is_pointer<T>::value) {
+            // On vérifie si la queue est pleine avant d'ajouter
+            if (queue.getNumberOfElements() == queue.getSize()) {
+                // On doit supprimer l'élément qui va être écrasé (le plus vieux)
+                // Note : il faut que DataQueue expose un moyen d'accéder au RawValues ou au Tail
+                T oldest = queue.getRawValues()[queue.getTailIndex()];
+                delete oldest;
+            }
+        }
+
+        // Utilisation de l'objet membre 'queue' et non de l'héritage
         queue.add(value);
-        this->publish();
+
+        // Notification des observers (l'UI)
+        this->notify();
     }
 
-    /**
-     * Update the last element of the collection. Useful if the latest value is still changing.
-     * If the collection is empty, this acts as a call to add
-     * @param value
-     */
     void update(T value) {
         queue.update(value);
-        this->publish();
+        this->notify(); // On notifie aussi sur un update
     }
 
+    // --- Délégation des méthodes de DataQueue ---
     [[nodiscard]] uint8_t getSize() const { return queue.getSize(); }
-
-    /**
-     * @return the number of values stored in the collection.
-     */
     [[nodiscard]] uint8_t getNumberOfElements() const { return queue.getNumberOfElements(); }
-
-    /**
-     * Return the underlying data of the collection.
-     * Use to set the data source of a bar chart.
-     * @return a pointer to the underlying data source
-     */
     [[nodiscard]] T* getValues() const { return queue.getValues(); }
+    [[nodiscard]] T& getLatestValue() const { return queue.getLatestValue(); }
 
     /**
-     * @return a pointer to the newest value added to the collection.
-     */
-    [[nodiscard]] T& getLatestValue() const noexcept(false) { return queue.getLatestValue(); }
-
-    /**
-     * Add a listener that only receives the latest value in the queue
-     * @param callback
-     * @return
+     * Helper pour l'UI : permet d'écouter uniquement la dernière valeur
      */
     ObserverToken addListenerForLatest(std::function<void(const T&)> callback) {
         return this->addListener([this, callback](const DataQueue<T>& q) {
-            callback(queue.getLatestValue());
+            if (queue.getNumberOfElements() > 0) {
+                callback(queue.getLatestValue());
+            }
         });
     }
 };
 
-#endif //UOSM_SENSOR_OBSERVEDDATAQUEUE_HPP
+#endif //UOSM_CORE_OBSERVEDDATAQUEUE_HPP
 #endif

@@ -142,6 +142,7 @@ private:
      */
     std::vector<Listener<T>> listeners;
 
+protected:
     /**
      * @brief Notify all registered listeners with the current value of the object.
      */
