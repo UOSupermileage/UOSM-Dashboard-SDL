@@ -88,17 +88,35 @@ int main(int argc, char **argv)
 
   uint32_t time = 0;
   
-  while(1) {
+/*  while(1) {
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
-    lv_timer_handler();
+ /*   lv_timer_handler();
     usleep(5 * 1000);
 
     time += 5;
 
     SetLapTime(wrapper, time % (1000));
+*  } */
+
+ while(1) {
+  lv_timer_handler();
+  usleep(5 * 1000);
+  time += 5;
+
+  if (time % 1000 == 0) {
+   printf("DEBUG: Test intensif en cours... (time: %d)\n", time);
   }
 
+  // On envoie 2000 messages au lieu de 500, et avec une valeur qui change
+  for(int i = 0; i < 35000; i++) {
+   // On sature les RPM
+   SetMotorRPM(wrapper, (velocity_t)i);
+
+   // On sature les logs (très lourd car ça crée des objets en mémoire)
+   LogCanMessage(wrapper, 0, i, 0);
+  }
+ }
   return 0;
 }
 
